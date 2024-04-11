@@ -1,0 +1,8 @@
+node_modules
+dist
+.idea
+.env
+
+data/questions-storage.json
+data/answers-storage.json
+data/settings-storage.json
