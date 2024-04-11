@@ -1,6 +1,6 @@
 import { Router } from '@grammyjs/router';
 import { PrivateContext, UserFlow } from '../../../types';
-import { AnswersStorage, QuestionStorage, SettingsStorage } from '../../../../../app';
+import { QuestionStorage, SettingsStorage } from '../../../../../app';
 import { needSendChatLinkMw } from '../middlewares/needSendChatLinkMw';
 import { messageTextHandler } from '../handlers/messageTextHandler';
 
@@ -22,17 +22,8 @@ const saveQuestion = (ctx: PrivateContext) => {
   return ctx.reply('Вопрос сохранён. Отправьте следующий ВОПРОС или нажмите /start.');
 }
 
-const saveAnswer = (ctx: PrivateContext) => {
-  const message = ctx.message?.text;
-  if (!message) return ctx.reply('Отправьте ОТВЕТ текстом.');
-
-  AnswersStorage.save(message);
-  return ctx.reply('Ответ сохранён. Отправьте следующий ОТВЕТ или нажмите /start.');
-}
-
 export const flowRouter = new Router<PrivateContext>(ctx => ctx.session.flow);
 
 flowRouter.route(UserFlow.NONE).on('message:text', needSendChatLinkMw, messageTextHandler);
 flowRouter.route(UserFlow.SEND_CHAT_LINK, saveChatLink);
 flowRouter.route(UserFlow.SEND_QUESTION, saveQuestion);
-flowRouter.route(UserFlow.SEND_ANSWER, saveAnswer);

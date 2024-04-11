@@ -6,4 +6,4 @@ export const {
   ADMIN_USERNAME,
 } = process.env;
 
-export const questionsLimit = 15;
+export const questionsLimit = 10;
